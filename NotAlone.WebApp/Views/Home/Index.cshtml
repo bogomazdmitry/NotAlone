@@ -1,0 +1,30 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Отправка сообщений получателям</h1>
+</div>
+
+<form method="post">
+    <div class="form-group">
+        <label> Информация первого человека </label>
+        <input class="form-control" name="firstPersonInfo" value="@Model?.FirstPersonInfo"/>
+    </div>
+    <div class="form-group">
+        <label> Информация второго человека </label>
+        <input class="form-control" name="secondPersonInfo" value="@Model?.SecondPersonInfo"/>
+    </div>
+    <div class="flex-grow-0">
+        @if (!String.IsNullOrEmpty(Model?.SuccessMessage))
+        {
+            <div class="alert alert-success" role="alert"> @Model.SuccessMessage </div>
+        }
+        @if (!String.IsNullOrEmpty(Model?.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert"> @Model.ErrorMessage </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить сообщения</button>
+</form>
