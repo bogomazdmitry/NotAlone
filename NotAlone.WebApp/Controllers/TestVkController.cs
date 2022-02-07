@@ -1,16 +1,15 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using NotAlone.Services;
-using NotAlone.WebApp.Models;
 
 namespace NotAlone.WebApp.Controllers
 {
     [Route("test")]
-    public class TestVkApiController : Controller
+    public class TestVkController : Controller
     {
         private readonly IVkService _vkService;
 
-        public TestVkApiController(IVkService vkService)
+        public TestVkController(IVkService vkService)
         {
             _vkService = vkService;
         }
@@ -23,18 +22,15 @@ namespace NotAlone.WebApp.Controllers
         [HttpPost]
         public IActionResult Index(string message, string recipient)
         {
-            TestVkApiViewModel testVkApiViewModel = new TestVkApiViewModel();
             try
             {
                 _vkService.SendMessage(message, recipient);
-                testVkApiViewModel.SuccessMessage = "Успешно";
+                return Ok("Успешно!");
             }
             catch (Exception exception)
             {
-                testVkApiViewModel.SuccessMessage = "";
-                testVkApiViewModel.ErrorMessage = exception.Message;
+                return BadRequest(exception.Message);
             }
-            return View(testVkApiViewModel);
         }
     }
 }

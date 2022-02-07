@@ -22,7 +22,7 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="TestVkApi" asp-action="Index">Test</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="TestVk" asp-action="Index">Test</a>
                     </li>
                 </ul>
             </div>
@@ -43,6 +43,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.6/dist/jquery.unobtrusive-ajax.min.js"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

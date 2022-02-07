@@ -35,7 +35,7 @@ namespace NotAlone.Services
         {
            var firstLoverPeople = LoverPeopleFromString(firstLoverPeopleInfo);
            var secondLoverPeople = LoverPeopleFromString(secondLoverPeopleInfo);    
-           HandlePeople(firstLoverPeople, firstLoverPeople);
+           HandlePeople(firstLoverPeople, secondLoverPeople);
         }
     }
 }

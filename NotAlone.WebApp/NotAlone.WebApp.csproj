@@ -9,4 +9,12 @@
       <ProjectReference Include="..\NotAlone.Services\NotAlone.Services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Pages" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Shared\Components\ErrorStatusComponent\ErrorStatus.cshtml" />
+    </ItemGroup>
+
 </Project>

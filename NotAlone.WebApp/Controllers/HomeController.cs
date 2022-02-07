@@ -19,6 +19,7 @@ namespace NotAlone.WebApp.Controllers
             _loverHandleService = loverHandlerService;
         }
 
+        
         public IActionResult Index()
         {
             return View();
@@ -27,20 +28,15 @@ namespace NotAlone.WebApp.Controllers
         [HttpPost]
         public IActionResult Index(string firstPersonInfo, string secondPersonInfo)
         {
-            IndexViewModel indexViewModel = new IndexViewModel();
             try
             {
                 _loverHandleService.HandlePeople(firstPersonInfo, secondPersonInfo);
-                indexViewModel.SuccessMessage = "Успешно";
+                return Ok("Успешно!");
             }
             catch (Exception exception)
             {
-                indexViewModel.SuccessMessage = "";
-                indexViewModel.ErrorMessage = exception.Message;
-                indexViewModel.FirstPersonInfo = firstPersonInfo;
-                indexViewModel.SecondPersonInfo = secondPersonInfo;
+                return BadRequest(exception.Message);
             }
-            return View(indexViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
