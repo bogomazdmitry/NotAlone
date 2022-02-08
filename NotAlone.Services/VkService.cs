@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using NotAlone.Common;
 using NotAlone.Models;
 using VkNet.Abstractions;
 using VkNet.Enums.Filters;
@@ -58,7 +56,7 @@ namespace NotAlone.Services
                 {
                     case "confirmation":
                         return _configuration["VkApiSettings:Confirmation"];
-
+                    // TODO: Fix this part, because vk is stupid platform
                     case "message_new":
                     {
                         var message =  request.Object.ToObject<Message>();

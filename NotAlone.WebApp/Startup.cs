@@ -23,6 +23,7 @@ namespace NotAlone.WebApp
             
             services.AddServices(_configuration);
             
+            // TODO: Implement Configuration from app setting, keys transfer to the env
             //services.Configure<VkApiSettings>(_configuration.GetSection(nameof(VkApiSettings)));
             //services.Configure<MessageTemplates>(_configuration.GetSection(nameof(MessageTemplates)));
         }
