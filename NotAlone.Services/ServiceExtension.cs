@@ -13,9 +13,10 @@ namespace NotAlone.Services
             services.AddScoped<IVkService, VkService>();
             services.AddScoped<ICreateMessageService, CreateMessageService>();
             services.AddScoped<ILoverHandlerService, LoverHandlerService>();
+
             services.AddSingleton<IVkApi>(sp => {
                 var vkApi = new VkApi();
-                vkApi.Authorize(new ApiAuthParams{ AccessToken = configuration["VkApi:AccessToken"] });
+                vkApi.Authorize(new ApiAuthParams{ AccessToken = configuration["VkApiSettings:AccessToken"] });
                 return vkApi;
             });
         }

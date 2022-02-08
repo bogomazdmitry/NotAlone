@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NotAlone.Common;
 using NotAlone.Services;
 
 namespace NotAlone.WebApp
@@ -22,6 +23,8 @@ namespace NotAlone.WebApp
             
             services.AddServices(_configuration);
             
+            //services.Configure<VkApiSettings>(_configuration.GetSection(nameof(VkApiSettings)));
+            //services.Configure<MessageTemplates>(_configuration.GetSection(nameof(MessageTemplates)));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

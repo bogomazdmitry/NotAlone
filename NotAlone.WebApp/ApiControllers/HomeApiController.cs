@@ -13,19 +13,22 @@ namespace NotAlone.WebApp.ApiControllers
         private readonly ILoverHandlerService _loverHandlerService;
 
         private readonly IConfiguration _configuration;
-
-
+        
         private readonly ILogger<HomeApiController> _logger;
+        
+        private readonly IVkService _vkService;
 
         public HomeApiController(
             ILoverHandlerService loverHandlerService,
             IConfiguration configuration,
+            IVkService vkService,
             ILogger<HomeApiController> logger
         )
         {
             _loverHandlerService = loverHandlerService;
             _configuration = configuration;
             _logger = logger;
+            _vkService = vkService;
         }
 
         [HttpPost]
@@ -40,21 +43,8 @@ namespace NotAlone.WebApp.ApiControllers
         [Route("vk/callback")]
         public IActionResult Callback([FromBody] VkApiRequest request)
         {
-            if (request != null)
-            {
-                _logger.LogInformation("VkApi:Confirmation: " + _configuration["VkApi:Confirmation"]);
-                switch (request?.Type)
-                {
-                    case "confirmation":
-                        return Ok(_configuration["VkApi:Confirmation"]);
-                }
-            }
-            else
-            {
-                _logger.LogInformation("Empty request");
-            }
-
-            return Ok("ok");
+            var result = _vkService.HandleRequest(request);
+            return Ok(result);
         }
     }
 }
