@@ -15,7 +15,7 @@ namespace NotAlone.WebApp
             _configuration = configuration;
         }
 
-        private IConfiguration _configuration { get; }
+        public IConfiguration _configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {

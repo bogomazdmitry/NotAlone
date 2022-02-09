@@ -1,6 +1,6 @@
 ﻿namespace NotAlone.Models
 {
-    public class LoverPeopleModel
+    public class LoverModel
     {
         //TODO: add fields
     }

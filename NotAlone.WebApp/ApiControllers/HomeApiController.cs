@@ -1,6 +1,8 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using NotAlone.Models;
 using NotAlone.Services;
 using NotAlone.WebApp.Models;
@@ -32,16 +34,16 @@ namespace NotAlone.WebApp.ApiControllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromBody] LoverPeopleRequestModel loverPeopleRequestModel)
+        public IActionResult Index([FromBody] LoverRequestModel loverRequestModel)
         {
-            _loverHandlerService.HandlePeople(loverPeopleRequestModel.FirstLoverPeopleModel,
-                loverPeopleRequestModel.SecondLoverPeopleModel);
+            _loverHandlerService.HandlePeople(loverRequestModel.FirstLoverModel,
+                loverRequestModel.SecondLoverModel);
             return Ok();
         }
 
         [HttpPost]
         [Route("vk/callback")]
-        public IActionResult Callback([FromBody] VkApiRequest request)
+        public IActionResult Callback([FromBody] JsonElement request)
         {
             var result = _vkService.HandleRequest(request);
             return Ok(result);

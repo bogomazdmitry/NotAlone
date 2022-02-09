@@ -1,4 +1,6 @@
-﻿using NotAlone.Models;
+﻿using System.Text.Json;
+using Newtonsoft.Json.Linq;
+using NotAlone.Models;
 
 namespace NotAlone.Services
 {
@@ -16,6 +18,6 @@ namespace NotAlone.Services
         /// </summary>
         /// <param name="request">Event object</param>
         /// <returns>String as status of handling</returns>
-        string HandleRequest(VkApiRequest request);
+        string HandleRequest(JsonElement request);
     }
 }

@@ -14,18 +14,18 @@ namespace NotAlone.Services
             _createMessageService = createMessageService;
         }
         
-        public LoverPeopleModel LoverPeopleFromString(string loverPeopleString)
+        public LoverModel LoverPeopleFromString(string loverPeopleString)
         {
             // TODO: Realise conversion from string to LoverPeople
-            return new LoverPeopleModel();
+            return new LoverModel();
         }
 
-        public void HandlePeople(LoverPeopleModel firstLoverPeopleModel, LoverPeopleModel secondLoverPeopleModel)
+        public void HandlePeople(LoverModel firstLoverModel, LoverModel secondLoverModel)
         {
             var messageForFirstLoverPeopleModel =
-                _createMessageService.CreateMessage(secondLoverPeopleModel, firstLoverPeopleModel);
+                _createMessageService.CreateMessage(secondLoverModel, firstLoverModel);
             var messageForSecondLoverPeopleModel =
-                _createMessageService.CreateMessage(firstLoverPeopleModel, secondLoverPeopleModel);
+                _createMessageService.CreateMessage(firstLoverModel, secondLoverModel);
             
             _vkService.SendMessage(messageForFirstLoverPeopleModel, ""); // TODO: insert link as recipient
             _vkService.SendMessage(messageForSecondLoverPeopleModel, ""); // TODO: insert link as recipient

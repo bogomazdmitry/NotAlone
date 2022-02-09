@@ -9,14 +9,14 @@ namespace NotAlone.Services
         /// </summary>
         /// <param name="loverPeopleString">String for parsing</param>
         /// <returns>LoverPeopleModel made with string</returns>
-        LoverPeopleModel LoverPeopleFromString(string loverPeopleString);
+        LoverModel LoverPeopleFromString(string loverPeopleString);
 
         /// <summary>
         /// Method create messages for loverPeople and send each other 
         /// </summary>
-        /// <param name="firstLoverPeopleModel">Info about the first person</param>
-        /// <param name="secondLoverPeopleModel">Info about the second person</param>
-        void HandlePeople(LoverPeopleModel firstLoverPeopleModel, LoverPeopleModel secondLoverPeopleModel);
+        /// <param name="firstLoverModel">Info about the first person</param>
+        /// <param name="secondLoverModel">Info about the second person</param>
+        void HandlePeople(LoverModel firstLoverModel, LoverModel secondLoverModel);
         
         /// <summary>
         /// Method create messages for loverPeople and send each other 
