@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Отправка сообщений получателям</h1>
+</div>
+
+<form id="form-interchange-messages"
+      method="post"
+      data-ajax="true"
+      data-ajax-success="onSuccess"
+      data-ajax-failure="onError">
+    
+    <div class="form-group">
+        <label> Информация первого человека </label>
+        <input class="form-control" name="firstPersonInfo"/>
+    </div>
+    <div class="form-group">
+        <label> Информация второго человека </label>
+        <input class="form-control" name="secondPersonInfo"/>
+    </div>
+
+    <div class="flex-grow-0">
+        <div id="result-form-interchange-messages">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Отправить сообщения</button>
+</form>
+
+<script>
+    function onSuccess(context) {
+        $('#form-interchange-messages')[0].reset();
+        
+        $.ajax('@Url.Action("Success", "ResponseModels")', {    
+            data: { message: context },  
+            type: 'GET',  
+            contentType: 'application/html; charset=utf-8',  
+            success: function (response) {  
+                $('#result-form-interchange-messages').html(response);
+            },
+            failure: function () {  
+                $('#result-form-interchange-messages').html(context);
+            },
+            
+        });
+    }
+        
+    function onError(context) {
+        $.ajax('@Url.Action("Error", "ResponseModels")', {  
+            data: { message: context.responseText },  
+            type: 'GET',  
+            contentType: 'application/html; charset=utf-8',  
+            success: function (response) {  
+                $('#result-form-interchange-messages').html(response);
+            },
+            failure: function (jqXHR, textStatus, errorThrown) {
+                $('#result-form-interchange-messages').html(context.responseText);
+            }  
+        });
+    }
+</script>

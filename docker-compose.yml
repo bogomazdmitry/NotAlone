@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  server:
+    image: not-alone
+    build:
+      context: ./
+      dockerfile: ./NotAlone.WebApp/Dockerfile
+    ports:
+      - 5000:5000
