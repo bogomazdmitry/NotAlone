@@ -15,6 +15,9 @@ RUN dotnet build "NotAlone.WebApp.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "NotAlone.WebApp.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
+ARG VkApiSettings_AccessToken
+ARG VkApiSettings_Confirmation
+
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
