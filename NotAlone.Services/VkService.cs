@@ -2,16 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using NotAlone.Models;
 using VkNet.Abstractions;
 using VkNet.Enums.Filters;
-using VkNet.Model;
 using VkNet.Model.RequestParams;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace NotAlone.Services
 {
@@ -32,8 +28,7 @@ namespace NotAlone.Services
         
         public void SendMessage(string message, string recipient)
         {
-            var recipientId = recipient
-                .Split("/")
+            var recipientId = Regex.Split(recipient, "/|@")
                 .Last(e => !string.IsNullOrEmpty(e));
             
             var user = _vkApi.Users.Get(new List<string> {
