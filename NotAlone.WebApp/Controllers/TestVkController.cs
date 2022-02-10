@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NotAlone.Services;
 
@@ -20,11 +21,11 @@ namespace NotAlone.WebApp.Controllers
         }
         
         [HttpPost]
-        public IActionResult Index(string message, string recipient)
+        public async Task<IActionResult> Index(string message, string recipient)
         {
             try
             {
-                _vkService.SendMessage(message, recipient);
+                await _vkService.SendMessage(message, recipient);
                 return Ok("Успешно!");
             }
             catch (Exception exception)

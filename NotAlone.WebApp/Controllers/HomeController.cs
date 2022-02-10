@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NotAlone.Services;
@@ -26,11 +27,11 @@ namespace NotAlone.WebApp.Controllers
         }
         
         [HttpPost]
-        public IActionResult Index(string firstPersonInfo, string secondPersonInfo)
+        public async Task<IActionResult> Index(string firstPersonInfo, string secondPersonInfo)
         {
             try
             {
-                _loverHandleService.HandlePeople(firstPersonInfo, secondPersonInfo);
+                await _loverHandleService.HandlePeople(firstPersonInfo, secondPersonInfo);
                 return Ok("Успешно!");
             }
             catch (Exception exception)

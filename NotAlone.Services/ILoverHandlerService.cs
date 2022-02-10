@@ -1,4 +1,5 @@
 using NotAlone.Models;
+using System.Threading.Tasks;
 
 namespace NotAlone.Services
 {
@@ -16,13 +17,13 @@ namespace NotAlone.Services
         /// </summary>
         /// <param name="firstLoverModel">Info about the first person</param>
         /// <param name="secondLoverModel">Info about the second person</param>
-        void HandlePeople(LoverModel firstLoverModel, LoverModel secondLoverModel);
+        Task HandlePeople(LoverModel firstLoverModel, LoverModel secondLoverModel);
         
         /// <summary>
         /// Method create messages for loverPeople and send each other 
         /// </summary>
         /// <param name="firstLoverPeopleInfo">Info about the first person as string</param>
         /// <param name="secondLoverPeopleInfo">Info about the second person as string</param>
-        void HandlePeople(string firstLoverPeopleInfo, string secondLoverPeopleInfo);
+        Task HandlePeople(string firstLoverPeopleInfo, string secondLoverPeopleInfo);
     }
 }
