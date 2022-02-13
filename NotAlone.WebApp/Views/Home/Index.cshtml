@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="text-center font-weight-bold my-3">
     <h1 class="display-4">Отправка сообщений получателям</h1>
 </div>
 
@@ -11,14 +11,25 @@
       data-ajax="true"
       data-ajax-success="onSuccess"
       data-ajax-failure="onError">
-    
-    <div class="form-group">
-        <label> Информация первого человека </label>
-        <input class="form-control" name="firstPersonInfo"/>
+
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" name="isBlindDate">
+        <label class="form-check-label font-weight-bold" for="flexSwitchCheckDefault">Свидание вслепую</label>
     </div>
+
+    <div class="form-group my-3">
+        <label> Информация первого человека </label>
+        <input class="form-control" name="firstPersonInfo" />
+    </div>
+
     <div class="form-group">
         <label> Информация второго человека </label>
-        <input class="form-control" name="secondPersonInfo"/>
+        <input class="form-control" name="secondPersonInfo" />
+    </div>
+
+    <div class="form-group">
+        <label> Ссылка на комнату для слепого свидания </label>
+        <input class="form-control" name="linkBlindDate" />
     </div>
 
     <div class="flex-grow-0">

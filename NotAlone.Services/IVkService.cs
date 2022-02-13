@@ -10,7 +10,7 @@ namespace NotAlone.Services
         /// </summary>
         /// <param name="message">Message for sending</param>
         /// <param name="recipient">Message recipient</param>
-        Task SendMessageImage(string message, string recipient, string vkUrl);
+        Task SendMessageWithImage(string message, string recipient, string vkUrl);
 
         /// <summary>
         /// Method handle any request from vk

@@ -27,11 +27,12 @@ namespace NotAlone.WebApp.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> Index(string firstPersonInfo, string secondPersonInfo)
+        public async Task<IActionResult> Index(string firstPersonInfo, string secondPersonInfo, string isBlindDate, string linkBlindDate)
         {
             try
             {
-                await _loverHandleService.HandlePeople(firstPersonInfo, secondPersonInfo);
+                bool blindDateChecker = isBlindDate == "on";
+                await _loverHandleService.HandlePeople(firstPersonInfo, secondPersonInfo, blindDateChecker, linkBlindDate);
                 return Ok("Успешно!");
             }
             catch (Exception exception)

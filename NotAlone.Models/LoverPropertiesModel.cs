@@ -1,12 +1,12 @@
 ﻿namespace NotAlone.Models
 {
-    public class LoverModel
+    public class LoverPropertiesModel
     {
         public string Date { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
         public string EventAim { get; set; }
-        public string VkURL { get; set; }
+        public string VKURL { get; set; }
         public string LoverSex { get; set; }
         public string PartnerSex { get; set; }
         public string Faculty { get; set; }

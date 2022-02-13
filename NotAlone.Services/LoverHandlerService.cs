@@ -15,16 +15,16 @@ namespace NotAlone.Services
             _createMessageService = createMessageService;
         }
 
-        public LoverModel LoverPeopleFromString(string loverPeopleString)
+        public LoverPropertiesModel LoverPeopleFromString(string loverPeopleString)
         {
             string[] loverArr = loverPeopleString.Split('\t');
-            var model = new LoverModel()
+            var model = new LoverPropertiesModel()
             {
                 Date = loverArr[0],
                 Email = loverArr[1],
                 Name = loverArr[2],
                 EventAim = loverArr[3],
-                VkURL = loverArr[4],
+                VKURL = loverArr[4],
                 LoverSex = loverArr[5],
                 PartnerSex = loverArr[6],
                 Faculty = loverArr[7],
@@ -47,22 +47,43 @@ namespace NotAlone.Services
             return model;
         }
 
-        public async Task HandlePeople(LoverModel firstLoverModel, LoverModel secondLoverModel)
+        public async Task HandlePeople(LoverPropertiesModel firstLoverModel, LoverPropertiesModel secondLoverModel)
         {
             var messageForFirstLoverPeopleModel =
                 _createMessageService.CreateMessage(secondLoverModel, firstLoverModel);
             var messageForSecondLoverPeopleModel =
                 _createMessageService.CreateMessage(firstLoverModel, secondLoverModel);
             
-            await _vkService.SendMessageImage(messageForFirstLoverPeopleModel, secondLoverModel.VkURL, firstLoverModel.PhotoUrl); 
-            await _vkService.SendMessageImage(messageForSecondLoverPeopleModel, firstLoverModel.VkURL, secondLoverModel.PhotoUrl);
+            await _vkService.SendMessageWithImage(messageForFirstLoverPeopleModel, secondLoverModel.VKURL, firstLoverModel.PhotoUrl); 
+            await _vkService.SendMessageWithImage(messageForSecondLoverPeopleModel, firstLoverModel.VKURL, secondLoverModel.PhotoUrl);
         }
 
-        public async Task HandlePeople(string firstLoverPeopleInfo, string secondLoverPeopleInfo)
+        public async Task HandlePeopleBlind(LoverPropertiesModel firstLoverModel, LoverPropertiesModel secondLoverModel, string linkBlindDate)
+        {
+            var messageForFirstLoverPeopleModel =
+                _createMessageService.CreateMessageForBlindDate(secondLoverModel, firstLoverModel, linkBlindDate);
+            var messageForSecondLoverPeopleModel =
+                _createMessageService.CreateMessageForBlindDate(firstLoverModel, secondLoverModel, linkBlindDate);
+
+            await _vkService.SendMessage(messageForFirstLoverPeopleModel, secondLoverModel.VKURL);
+            await _vkService.SendMessage(messageForSecondLoverPeopleModel, firstLoverModel.VKURL);
+        }
+
+        // TODO: check link for blind dates != null
+        // if link != null but Checker false throw exception
+        // if Checker == true and link == null throw exception
+        public async Task HandlePeople(string firstLoverPeopleInfo, string secondLoverPeopleInfo, bool blindDateChecker, string linkBlindDate)
         {
            var firstLoverPeople = LoverPeopleFromString(firstLoverPeopleInfo);
-           var secondLoverPeople = LoverPeopleFromString(secondLoverPeopleInfo);    
-           await HandlePeople(firstLoverPeople, secondLoverPeople);
+           var secondLoverPeople = LoverPeopleFromString(secondLoverPeopleInfo);
+            if (blindDateChecker)
+            {
+                await HandlePeopleBlind(firstLoverPeople, secondLoverPeople, linkBlindDate);
+            }
+            else
+            {
+                await HandlePeople(firstLoverPeople, secondLoverPeople);
+            }
         }
     }
 }

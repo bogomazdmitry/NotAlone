@@ -33,10 +33,8 @@ namespace NotAlone.Services
 
         private async Task<string> UploadFile(string serverUrl, string file, string fileExtension)
         {
-            // Получение массива байтов из файла
             var data = GetBytes(file);
 
-            // Создание запроса на загрузку файла на сервер
             using (var client = new HttpClient())
             {
                 var requestContent = new MultipartFormDataContent();
@@ -57,11 +55,9 @@ namespace NotAlone.Services
             }
         }
 
-        public async Task SendMessageImage(string message, string recipient, string imageUrl)
+        private VkNet.Model.User ReturnUser(string recipientUrl)
         {
-            var imageId = imageUrl.Split("=")[1];
-            imageUrl = $"https://drive.google.com/u/0/uc?id=" + imageId + "&export=download";
-            var recipientId = Regex.Split(recipient, "/|@")
+            var recipientId = Regex.Split(recipientUrl, "/|@")
                 .Last(e => !string.IsNullOrEmpty(e));
 
             var user = _vkApi.Users.Get(new List<string> {
@@ -71,10 +67,21 @@ namespace NotAlone.Services
             {
                 throw new Exception($"Пользователь с id: {recipientId} не найден");
             }
+            return user;
+        }
+
+        public async Task SendMessageWithImage(string message, string recipient, string imageUrl)
+        {
+            var user = ReturnUser(recipient);
+            
             _logger.LogInformation($"User id for sending: { user.Id.ToString()}");
+            var imageId = imageUrl.Split("=")[1];
+
+            imageUrl = $"https://drive.google.com/u/0/uc?id=" + imageId + "&export=download";
             var uploadServer = _vkApi.Photo.GetMessagesUploadServer(200654480);
             var response = await UploadFile(uploadServer.UploadUrl, imageUrl, "jpg");
             var attachment = _vkApi.Photo.SaveMessagesPhoto(response);
+
             _vkApi.Messages.Send(new MessagesSendParams{ 
                 RandomId = new DateTime().Millisecond,
                 Message = message,
@@ -85,16 +92,8 @@ namespace NotAlone.Services
 
         public async Task SendMessage(string message, string recipient)
         {
-            var recipientId = Regex.Split(recipient, "/|@")
-                .Last(e => !string.IsNullOrEmpty(e));
+            var user = ReturnUser(recipient);
 
-            var user = _vkApi.Users.Get(new List<string> {
-                recipientId
-            }, ProfileFields.Uid).FirstOrDefault();
-            if (user == null)
-            {
-                throw new Exception($"Пользователь с id: {recipientId} не найден");
-            }
             _logger.LogInformation($"User id for sending: { user.Id.ToString()}");
             
             _vkApi.Messages.Send(new MessagesSendParams
