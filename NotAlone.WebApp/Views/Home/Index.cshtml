@@ -7,29 +7,42 @@
 </div>
 
 <form id="form-interchange-messages"
+      class="needs-validation"
       method="post"
       data-ajax="true"
       data-ajax-success="onSuccess"
       data-ajax-failure="onError">
 
     <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" name="isBlindDate">
-        <label class="form-check-label font-weight-bold" for="flexSwitchCheckDefault">Свидание вслепую</label>
+        <input class="form-check-input" type="checkbox" name="isBlindDate" id="is-blind-date-input" >
+        <label class="form-check-label font-weight-bold" for="is-blind-date-input">Свидание вслепую</label>
+        <div class="invalid-feedback">
+            Нажмите сюда или очистите поле ссылки слепого свидания
+        </div>
     </div>
 
     <div class="form-group my-3">
         <label> Информация первого человека </label>
-        <input class="form-control" name="firstPersonInfo" />
+        <input class="form-control" name="firstPersonInfo" id="first-person-info-input" />
+        <div class="invalid-feedback">
+            Поле обязательно или неправильно заполнено
+        </div>
     </div>
 
     <div class="form-group">
         <label> Информация второго человека </label>
-        <input class="form-control" name="secondPersonInfo" />
+        <input class="form-control" name="secondPersonInfo" id="second-person-info-input" />
+        <div class="invalid-feedback">
+            Поле обязательно или неправильно заполнено
+        </div>
     </div>
 
     <div class="form-group">
         <label> Ссылка на комнату для слепого свидания </label>
-        <input class="form-control" name="linkBlindDate" />
+        <input class="form-control" name="linkBlindDate" id="link-blind-date-input" />
+        <div class="invalid-feedback">
+            Поле обязательно
+        </div>
     </div>
 
     <div class="flex-grow-0">
@@ -42,6 +55,7 @@
 
 <script>
     function onSuccess(context) {
+        $('#form-interchange-messages')[0].removeClass('was-validated');
         $('#form-interchange-messages')[0].reset();
         
         $.ajax('@Url.Action("Success", "ResponseModels")', {    
@@ -71,4 +85,72 @@
             }  
         });
     }
+    
+    (function () {
+      'use strict'
+    
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+    
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            let formIsValid = true; 
+            let linkBlindDateInput = $('#link-blind-date-input');
+            let linkBlindDate = linkBlindDateInput.val();
+            let isBlindDateInput = $('#is-blind-date-input');
+            let isBlindDate = isBlindDateInput.prop("checked");
+            if(!linkBlindDate === true && isBlindDate === true)
+            {
+                linkBlindDateInput.addClass('is-invalid');
+                linkBlindDateInput.removeClass('is-valid');
+                
+                formIsValid = false;
+            }
+            else
+            {
+                linkBlindDateInput.removeClass('is-invalid');
+            }
+            if (!linkBlindDate === false && isBlindDate === false)
+            {
+                isBlindDateInput.addClass('is-invalid');
+                isBlindDateInput.removeClass('is-valid');
+                formIsValid = false;
+            }
+            else
+            {
+                isBlindDateInput.removeClass('is-invalid');
+                formIsValid = false;
+            }
+            let firstPersonInfoInput = $('#first-person-info-input');
+            if (!firstPersonInfoInput.val() || firstPersonInfoInput.val().split('\t').length < 7)
+            {
+                firstPersonInfoInput.addClass('is-invalid');
+                firstPersonInfoInput.removeClass('is-valid');
+                formIsValid = false;
+            }
+            else
+            {
+                 firstPersonInfoInput.removeClass('is-invalid');
+             }
+            let secondPersonInfoInput = $('#second-person-info-input');
+            if (!secondPersonInfoInput.val() || secondPersonInfoInput.val().split('\t').length < 7)
+            {
+                secondPersonInfoInput.addClass('is-invalid');
+                secondPersonInfoInput.removeClass('is-valid');
+                formIsValid = false;
+            }
+            else
+            {
+                secondPersonInfoInput.removeClass('is-invalid');
+            }
+            
+            if (!formIsValid) {
+              event.preventDefault();
+              event.stopPropagation();
+            }      
+          }, false)
+        })
+    })()
 </script>
