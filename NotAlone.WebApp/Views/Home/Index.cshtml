@@ -71,7 +71,7 @@
                 $('#result-form-interchange-messages').html(context);
             },
         });
-        $('#interchange-messages-submit').prop('disabled', 'false');
+        $('#interchange-messages-submit').removeAttr("disabled");
     }
         
     function onError(context) {
@@ -86,11 +86,10 @@
                 $('#result-form-interchange-messages').html(context.responseText);
             }  
         });
-        $('#interchange-messages-submit').prop('disabled', 'false');
+        $('#interchange-messages-submit').removeAttr("disabled");
     }
     
     function onBegin(context) {
-        console.log('hello');
         $('#interchange-messages-submit').prop('disabled', 'true');
     }
     
