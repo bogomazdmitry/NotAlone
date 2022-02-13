@@ -10,6 +10,7 @@
       class="needs-validation"
       method="post"
       data-ajax="true"
+      data-ajax-begin="onBegin"
       data-ajax-success="onSuccess"
       data-ajax-failure="onError">
 
@@ -50,12 +51,13 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Отправить сообщения</button>
+    <button type="submit" id="interchange-messages-submit" class="btn btn-primary">Отправить сообщения</button>
 </form>
 
 <script>
     function onSuccess(context) {
-        $('#form-interchange-messages')[0].removeClass('was-validated');
+        $('.form-control').removeClass("is-valid");
+        $('.form-check-input').removeClass("is-valid");
         $('#form-interchange-messages')[0].reset();
         
         $.ajax('@Url.Action("Success", "ResponseModels")', {    
@@ -68,8 +70,8 @@
             failure: function () {  
                 $('#result-form-interchange-messages').html(context);
             },
-            
         });
+        $('#interchange-messages-submit').prop('disabled', 'false');
     }
         
     function onError(context) {
@@ -84,19 +86,25 @@
                 $('#result-form-interchange-messages').html(context.responseText);
             }  
         });
+        $('#interchange-messages-submit').prop('disabled', 'false');
+    }
+    
+    function onBegin(context) {
+        console.log('hello');
+        $('#interchange-messages-submit').prop('disabled', 'true');
     }
     
     (function () {
       'use strict'
     
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.querySelectorAll('.needs-validation')
+      var forms = document.querySelectorAll('.needs-validation');
     
       // Loop over them and prevent submission
       Array.prototype.slice.call(forms)
         .forEach(function (form) {
           form.addEventListener('submit', function (event) {
-            let formIsValid = true; 
+            let formIsValid = true;
             let linkBlindDateInput = $('#link-blind-date-input');
             let linkBlindDate = linkBlindDateInput.val();
             let isBlindDateInput = $('#is-blind-date-input');
@@ -105,12 +113,12 @@
             {
                 linkBlindDateInput.addClass('is-invalid');
                 linkBlindDateInput.removeClass('is-valid');
-                
                 formIsValid = false;
             }
             else
             {
                 linkBlindDateInput.removeClass('is-invalid');
+                linkBlindDateInput.addClass('is-valid');
             }
             if (!linkBlindDate === false && isBlindDate === false)
             {
@@ -121,7 +129,7 @@
             else
             {
                 isBlindDateInput.removeClass('is-invalid');
-                formIsValid = false;
+                isBlindDateInput.addClass('is-valid');
             }
             let firstPersonInfoInput = $('#first-person-info-input');
             if (!firstPersonInfoInput.val() || firstPersonInfoInput.val().split('\t').length < 7)
@@ -133,7 +141,8 @@
             else
             {
                  firstPersonInfoInput.removeClass('is-invalid');
-             }
+                 firstPersonInfoInput.addClass('is-valid');
+            }
             let secondPersonInfoInput = $('#second-person-info-input');
             if (!secondPersonInfoInput.val() || secondPersonInfoInput.val().split('\t').length < 7)
             {
@@ -144,12 +153,13 @@
             else
             {
                 secondPersonInfoInput.removeClass('is-invalid');
+                secondPersonInfoInput.addClass('is-valid');
             }
             
             if (!formIsValid) {
-              event.preventDefault();
-              event.stopPropagation();
-            }      
+                event.preventDefault();
+                event.stopPropagation();
+            }
           }, false)
         })
     })()
