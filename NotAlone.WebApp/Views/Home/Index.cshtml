@@ -51,7 +51,8 @@
         </div>
     </div>
 
-    <button type="submit" id="interchange-messages-submit" class="btn btn-primary">Отправить сообщения</button>
+    <button type="submit" id="interchange-messages-add-to-queue" class="btn btn-primary interchange-messages-submit" name="Action" value="add-to-queue">Поставить в очередь</button>
+    <button type="submit" id="interchange-messages-send" class="btn btn-primary interchange-messages-submit" name="Action" value="send">Отправить сообщения</button>
 </form>
 
 <script>
@@ -71,7 +72,7 @@
                 $('#result-form-interchange-messages').html(context);
             },
         });
-        $('#interchange-messages-submit').removeAttr("disabled");
+        $('.interchange-messages-submit').removeAttr("disabled");
     }
         
     function onError(context) {
@@ -86,11 +87,11 @@
                 $('#result-form-interchange-messages').html(context.responseText);
             }  
         });
-        $('#interchange-messages-submit').removeAttr("disabled");
+        $('.interchange-messages-submit').removeAttr("disabled");
     }
     
     function onBegin(context) {
-        $('#interchange-messages-submit').prop('disabled', 'true');
+        $('.interchange-messages-submit').prop('disabled', 'true');
     }
     
     (function () {

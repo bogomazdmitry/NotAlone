@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using NotAlone.Models;
 using System.Threading.Tasks;
+using NotAlone.Domain.Repositories;
 
 namespace NotAlone.Services
 {
@@ -8,11 +11,14 @@ namespace NotAlone.Services
         private readonly IVkService _vkService;
 
         private readonly ICreateMessageService _createMessageService;
+        
+        private readonly IQueueItemRepository _queueItemRepository;
 
-        public LoverHandlerService(IVkService vkService, ICreateMessageService createMessageService)
+        public LoverHandlerService(IVkService vkService, ICreateMessageService createMessageService, IQueueItemRepository queueItemRepository)
         {
             _vkService = vkService;
             _createMessageService = createMessageService;
+            _queueItemRepository = queueItemRepository;
         }
 
         public LoverPropertiesModel LoverPeopleFromString(string loverPeopleString)
@@ -47,7 +53,7 @@ namespace NotAlone.Services
             return model;
         }
 
-        public async Task HandlePeople(LoverPropertiesModel firstLoverModel, LoverPropertiesModel secondLoverModel)
+        public async Task HandlePeopleWithoutBlind(LoverPropertiesModel firstLoverModel, LoverPropertiesModel secondLoverModel)
         {
             var messageForFirstLoverPeopleModel =
                 _createMessageService.CreateMessage(secondLoverModel, firstLoverModel);
@@ -58,6 +64,19 @@ namespace NotAlone.Services
             await _vkService.SendMessageWithImage(messageForSecondLoverPeopleModel, firstLoverModel.VKURL, secondLoverModel.PhotoUrl);
         }
 
+        public async Task HandlePeople(LoverPropertiesModel firstLoverModel, LoverPropertiesModel secondLoverModel,
+            bool blindDateChecker, string linkBlindDate)
+        {
+            if (blindDateChecker)
+            {
+                await HandlePeopleBlind(firstLoverModel, secondLoverModel, linkBlindDate);
+            }
+            else
+            {
+                await HandlePeopleWithoutBlind(firstLoverModel, secondLoverModel);
+            }
+        }
+        
         public async Task HandlePeopleBlind(LoverPropertiesModel firstLoverModel, LoverPropertiesModel secondLoverModel, string linkBlindDate)
         {
             var messageForFirstLoverPeopleModel =
@@ -76,14 +95,44 @@ namespace NotAlone.Services
         {
            var firstLoverPeople = LoverPeopleFromString(firstLoverPeopleInfo);
            var secondLoverPeople = LoverPeopleFromString(secondLoverPeopleInfo);
-            if (blindDateChecker)
+           await HandlePeople(firstLoverPeople, secondLoverPeople, blindDateChecker, linkBlindDate);
+        }
+
+        public async Task AddPeopleToQueue(string firstLoverPeopleInfo, string secondLoverPeopleInfo, bool blindDateChecker,
+            string linkBlindDate)
+        {
+            var firstLoverModel = LoverPeopleFromString(firstLoverPeopleInfo);
+            var secondLoverModel = LoverPeopleFromString(secondLoverPeopleInfo);
+            // if (_queueItemRepository.ExistWithVkUrl(firstLoverModel.VKURL))
+            // {
+            //     throw new Exception($"Пользователь с ссылкой: {firstLoverModel.VKURL} находится в очереди");
+            // }
+            // if (_queueItemRepository.ExistWithVkUrl(secondLoverModel.VKURL))
+            // {
+            //     throw new Exception($"Пользователь с ссылкой: {secondLoverModel.VKURL} находится в очереди");
+            // }
+            var queueItem = new QueueItemModel()
             {
-                await HandlePeopleBlind(firstLoverPeople, secondLoverPeople, linkBlindDate);
-            }
-            else
-            {
-                await HandlePeople(firstLoverPeople, secondLoverPeople);
-            }
+                FirstPerson = firstLoverModel, 
+                SecondPerson = secondLoverModel, 
+                IsBlindDate = blindDateChecker, 
+                LinkBlindDate = linkBlindDate
+            };
+            _queueItemRepository.Add(queueItem);
+        }
+
+        public async Task<List<QueueItemModel>> GetQueueItems()
+        {
+            return _queueItemRepository.Get();
+        }
+        
+        public async Task RemoveQueueItem(QueueItemModel queueItemModel)
+        {
+            _queueItemRepository.Remove(queueItemModel);
+        }
+        public async Task RemoveQueueItem(string firstPersonVkUrl, string secondPersonVkUrl)
+        {
+            _queueItemRepository.Remove(firstPersonVkUrl, secondPersonVkUrl);
         }
     }
 }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotAlone.WebApp", "NotAlone
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotAlone.Common", "NotAlone.Common\NotAlone.Common.csproj", "{C87E5579-38CC-4104-B0C5-F6E00D567FAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotAlone.Domain", "NotAlone.Domain\NotAlone.Domain.csproj", "{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{C87E5579-38CC-4104-B0C5-F6E00D567FAE}.Release|x64.Build.0 = Release|Any CPU
 		{C87E5579-38CC-4104-B0C5-F6E00D567FAE}.Release|x86.ActiveCfg = Release|Any CPU
 		{C87E5579-38CC-4104-B0C5-F6E00D567FAE}.Release|x86.Build.0 = Release|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Debug|x64.Build.0 = Debug|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Debug|x86.Build.0 = Debug|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Release|x64.ActiveCfg = Release|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Release|x64.Build.0 = Release|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Release|x86.ActiveCfg = Release|Any CPU
+		{F0592FDE-F351-4A93-9AF5-30006E6C6ED3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

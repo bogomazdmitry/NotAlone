@@ -5,12 +5,17 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\NotAlone.Domain\NotAlone.Domain.csproj" />
       <ProjectReference Include="..\NotAlone.Models\NotAlone.Models.csproj" />
       <ProjectReference Include="..\NotAlone.Services\NotAlone.Services.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Shared\Components\ErrorStatusComponent\ErrorStatus.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Attributes" />
     </ItemGroup>
 
 </Project>
