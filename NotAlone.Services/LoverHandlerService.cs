@@ -103,14 +103,14 @@ namespace NotAlone.Services
         {
             var firstLoverModel = LoverPeopleFromString(firstLoverPeopleInfo);
             var secondLoverModel = LoverPeopleFromString(secondLoverPeopleInfo);
-            // if (_queueItemRepository.ExistWithVkUrl(firstLoverModel.VKURL))
-            // {
-            //     throw new Exception($"Пользователь с ссылкой: {firstLoverModel.VKURL} находится в очереди");
-            // }
-            // if (_queueItemRepository.ExistWithVkUrl(secondLoverModel.VKURL))
-            // {
-            //     throw new Exception($"Пользователь с ссылкой: {secondLoverModel.VKURL} находится в очереди");
-            // }
+            if (_queueItemRepository.ExistWithVkUrl(firstLoverModel.VKURL))
+            {
+                throw new Exception($"Пользователь с ссылкой: {firstLoverModel.VKURL} находится в очереди");
+            }
+            if (_queueItemRepository.ExistWithVkUrl(secondLoverModel.VKURL))
+            {
+                throw new Exception($"Пользователь с ссылкой: {secondLoverModel.VKURL} находится в очереди");
+            }
             var queueItem = new QueueItemModel()
             {
                 FirstPerson = firstLoverModel, 
