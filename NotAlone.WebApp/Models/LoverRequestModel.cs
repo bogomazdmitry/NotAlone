@@ -4,8 +4,8 @@ namespace NotAlone.WebApp.Models
 {
     public class LoverRequestModel
     {
-        public LoverModel FirstLoverModel { get; set; }
+        public LoverPropertiesModel FirstLoverModel { get; set; }
         
-        public LoverModel SecondLoverModel { get; set; }
+        public LoverPropertiesModel SecondLoverModel { get; set; }
     }
 }

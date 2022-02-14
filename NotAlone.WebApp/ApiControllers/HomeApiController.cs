@@ -34,14 +34,6 @@ namespace NotAlone.WebApp.ApiControllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromBody] LoverRequestModel loverRequestModel)
-        {
-            _loverHandlerService.HandlePeople(loverRequestModel.FirstLoverModel,
-                loverRequestModel.SecondLoverModel);
-            return Ok();
-        }
-
-        [HttpPost]
         [Route("vk/callback")]
         public IActionResult Callback([FromBody] JsonElement request)
         {

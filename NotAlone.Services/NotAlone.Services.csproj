@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\NotAlone.Common\NotAlone.Common.csproj" />
+      <ProjectReference Include="..\NotAlone.Domain\NotAlone.Domain.csproj" />
       <ProjectReference Include="..\NotAlone.Models\NotAlone.Models.csproj" />
     </ItemGroup>
 

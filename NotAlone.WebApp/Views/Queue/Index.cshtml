@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Queue Page";
+}
+@model List<NotAlone.Models.QueueItemModel>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="text-center font-weight-bold">
+        <h1 class="display-4 my-3">Очередь пар пуста</h1>
+    </div>
+}
+else
+{
+    <div class="text-center font-weight-bold">
+        <h1 class="display-4 my-3">Очередь пар</h1>
+    </div>
+    <form asp-action="HandleAllQueueItems">
+        <button type="submit" class="btn btn-success btn-lg btn-block">Отправить всё</button>
+    </form>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Первый партнер</th>
+            <th scope="col">Второй партнер</th>
+            <th scope="col">Свидание вслепую?</th>
+            <th scope="col">Удалить пару из списка</th>
+        </tr>
+        </thead>
+        <tbody>
+        @{int index = 0;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">
+                    @{ ++index; }
+                    @index
+                </th>
+                <td>@item.FirstPerson.VKURL</td>
+                <td>@item.SecondPerson.VKURL</td>
+                <td>
+                    @if (item.IsBlindDate)
+                    {
+                        <span>Да</span>
+                    }
+                    else
+                    {
+                        <span>Нет</span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Удалить", "DeleteQueueItem",
+                    new {
+                        firstPersonVkUrl = item.FirstPerson.VKURL,
+                        secondPersonVkUrl = item.SecondPerson.VKURL
+                    },
+        new {@class= "btn btn-outline-danger"})
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

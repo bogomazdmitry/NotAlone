@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NotAlone.Common;
+using NotAlone.Domain;
 using NotAlone.Services;
 
 namespace NotAlone.WebApp
@@ -22,6 +22,8 @@ namespace NotAlone.WebApp
             services.AddControllersWithViews();
             
             services.AddServices(_configuration);
+            
+            services.AddRepositories();
             
             // TODO: Implement Configuration from app setting, keys transfer to the env
             //services.Configure<VkApiSettings>(_configuration.GetSection(nameof(VkApiSettings)));
